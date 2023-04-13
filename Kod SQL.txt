@@ -1,0 +1,210 @@
+CREATE TABLE Usługa (
+    ID_usługi INT PRIMARY KEY AUTO_INCREMENT,
+    Nazwa VARCHAR(20) NOT NULL,
+    Cena DECIMAL(5,2) NOT NULL
+);
+
+CREATE TABLE Klient (
+    ID_klienta INT PRIMARY KEY AUTO_INCREMENT,
+    Imie VARCHAR(20) NOT NULL,
+    Nazwisko VARCHAR(30) NOT NULL,
+    Pesel VARCHAR(11) NOT NULL,
+    Numer_telefonu VARCHAR(9) NOT NULL
+);
+
+CREATE TABLE Klient_Usluga (
+	ID_Klient INT,
+	ID_Usluga INT,
+    CONSTRAINT Us_Kli PRIMARY KEY(ID_Klient, ID_Usluga),
+    FOREIGN KEY (ID_Klient) REFERENCES Klient(ID_klienta),
+    FOREIGN KEY (ID_Usluga) REFERENCES Usługa(ID_usługi),
+    Data DATE NOT NULL
+);
+
+CREATE TABLE Pokój (
+    ID_pokoju INT PRIMARY KEY AUTO_INCREMENT,
+    Numer TINYINT unsigned NOT NULL,
+    Liczba_miejsc tinyint NOT NULL,
+    Cena DECIMAL(5,2) NOT NULL,
+    Ilość_łóżek_1osobowych TINYINT NOT NULL
+    
+);
+
+CREATE TABLE Rezerwacja (
+    ID_rezerwacji INT PRIMARY KEY AUTO_INCREMENT,
+    ID_pokoju INT,
+    ID_klienta INT,
+    Data DATE NOT NULL,
+    Cena DECIMAL(5,2) NOT NULL,
+    Status VARCHAR(15) NOT NULL,
+    Do_kiedy DATE NOT NULL,
+    FOREIGN KEY (ID_klienta) REFERENCES Klient(ID_klienta),
+    FOREIGN KEY (ID_pokoju) REFERENCES Pokój(ID_pokoju)
+);
+
+INSERT INTO Pokój (Numer, Liczba_miejsc, Cena, Ilość_łóżek_1osobowych) VALUES
+(101, 2, 120, 1),
+(102, 2, 130, 2),
+(103, 3, 140, 1),
+(104, 2, 150, 1),
+(105, 4, 160, 2),
+(106, 2, 170, 1),
+(107, 3, 180, 2),
+(108, 2, 190, 1),
+(109, 4, 200, 2),
+(110, 2, 210, 1),
+(111, 3, 220, 2),
+(112, 2, 230, 1),
+(113, 4, 240, 2),
+(114, 2, 250, 1),
+(115, 3, 260, 2),
+(116, 2, 270, 1),
+(117, 4, 280, 2),
+(118, 2, 290, 1),
+(119, 3, 300, 2),
+(120, 2, 310, 1),
+(121, 4, 320, 2),
+(1, 2, 100, 1),
+(2, 2, 110, 1),
+(3, 2, 120, 2),
+(4, 2, 130, 2),
+(5, 2, 140, 1),
+(6, 2, 150, 2),
+(7, 4, 200, 2),
+(8, 4, 210, 2),
+(9, 4, 220, 2),
+(10, 4, 230, 2),
+(11, 2, rand()*100+100, 1),
+(12, 2, rand()*150+50, 1),
+(13, 2, rand()*150+100, 1),
+(14, 2, rand()*150+100, 1),
+(15, 2, rand()*150+50, 1),
+(16, 2, rand()*150+50, 1),
+(17, 2, rand()*150+50, 1),
+(18, 2, rand()*150+50, 1),
+(19, 2, rand()*150+50, 1),
+(20, 2, rand()*150+50, 1),
+(21, 2, rand()*150+50, 1),
+(22, 2, rand()*150+50, 1),
+(23, 2, rand()*150+50, 1),
+(24, 2, rand()*150+50, 1),
+(25, 2, rand()*150+50, 1),
+(26, 2, rand()*150+50, 1),
+(27, 2, rand()*150+100, 1),
+(28, 2, rand()*150+50, 1),
+(29, 2, rand()*150+100, 1),
+(30, 2, rand()*150+50, 1);
+
+INSERT INTO Usługa (Nazwa, Cena) VALUES
+('Śniadanie', 20),
+('Obiad', 30),
+('Kolacja', 25),
+('Sauna', 15),
+('Siłownia', 10),
+('Basen', 20),
+('Masaz', 50);
+
+INSERT INTO Klient (Imie, Nazwisko, Pesel, Numer_telefonu) VALUES
+('Adam', 'Kowalski', '12345678901', '555555555'),
+('Anna', 'Nowak', '23456789012', '555555556'),
+('Tomasz', 'Wisniewski', '34567890123', '555555557'),
+('Katarzyna', 'Dąbrowska', '45678901234', '555555558'),
+('Piotr', 'Kozłowski', '56789012345', '555555559'),
+('Agnieszka', 'Wójcik', '67890123456', '555555560'),
+('Marcin', 'Kwiatkowski', '78901234567', '555555561'),
+('Marta', 'Krawczyk', '89012345678', '555555562'),
+('Jan', 'Kaczmarek', '90123456789', '555555563'),
+('Ewa', 'Mazur', '01234567890', '555555564'),
+('Michał', 'Wojciechowski', '12345678901', '555555565'),
+('Magdalena', 'Nowakowska','23456789012', '555555566'),
+('Dawid', 'Kowalczyk', '34567890123', '555555567'),
+('Kinga', 'Woźniak', '45678901234', '555555568'),
+('Krzysztof', 'Jankowski', '56789012345', '555555569'),
+('Monika', 'Wróbel', '67890123456', '555555570'),
+('Bartosz', 'Mazurek', '78901234567', '555555571'),
+('Sylwia', 'Kozieł', '89012345678', '555555572'),
+('Patrycja', 'Jarosz', '90123456789', '555555573'),
+('Damian', 'Putowski', '01234567890', '555555574'),
+('Alicja', 'Zając', '12345678901', '555555575'),
+('Mateusz', 'Król', '23456789012', '555555576');
+
+INSERT INTO Rezerwacja (ID_pokoju, ID_klienta, Data, Cena, Status, Do_kiedy) VALUES
+(2, (floor(rand()*21)+1), '2022-10-02', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-04'),
+(3, (floor(rand()*21)+1), '2022-10-03', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-05'),
+(4, (floor(rand()*21)+1), '2022-10-04', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-06'),
+(5, (floor(rand()*21)+1), '2022-10-05', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-07'),
+(6, (floor(rand()*21)+1), '2022-10-06', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-08'),
+(7, (floor(rand()*21)+1), '2022-10-07', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-09'),
+(8, (floor(rand()*21)+1), '2022-10-08', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-10'),
+(9, (floor(rand()*21)+1), '2022-10-09', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-11'),
+(10, (floor(rand()*21)+1), '2022-10-10', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-12'),
+(11, (floor(rand()*21)+1), '2022-10-11', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-13'),
+(12, (floor(rand()*21)+1), '2022-10-12', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-14'),
+(13, (floor(rand()*21)+1), '2022-10-13', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-15'),
+(14, (floor(rand()*21)+1), '2022-10-14', (100 + floor(rand()*100)), 'oczekująca', '2022-10-16'),
+(15, (floor(rand()*21)+1), '2022-10-15', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-17'),
+(16, (floor(rand()*21)+1), '2022-10-16', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-18'),
+(17, (floor(rand()*21)+1), '2022-10-17', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-19'),
+(18, (floor(rand()*21)+1), '2022-10-18', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-20'),
+(19, (floor(rand()*21)+1), '2022-10-19', (100 + floor(rand()*100)), 'oczekująca', '2022-10-21'),
+(20, (floor(rand()*21)+1), '2022-10-20', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-22'),
+(21, (floor(rand()*21)+1), '2022-10-21', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-23'),
+(22, (floor(rand()*21)+1), '2022-10-22', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-24'),
+(23, (floor(rand()*21)+1), '2022-10-23', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-25'),
+(24, (floor(rand()*21)+1), '2022-10-24', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-26'),
+(25, (floor(rand()*21)+1), '2022-10-25', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-27'),
+(26, (floor(rand()*21)+1), '2022-10-26', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-28'),
+(27, (floor(rand()*21)+1), '2022-10-27', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-29'),
+(28, (floor(rand()*21)+1), '2022-10-28', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-30'),
+(29, (floor(rand()*21)+1), '2022-10-29', (100 + floor(rand()*100)), 'zatwierdzona', '2022-10-31'),
+(30, (floor(rand()*21)+1), '2022-10-30', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-01'),
+(31, (floor(rand()*21)+1), '2022-11-01', (100 + floor(rand()*100)), 'oczekująca', '2022-11-02'),
+(32, (floor(rand()*21)+1), '2022-11-02', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-03'),
+(33, (floor(rand()*21)+1), '2022-11-03', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-04'),
+(34, (floor(rand()*21)+1), '2022-11-04', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-05'),
+(35, (floor(rand()*21)+1), '2022-11-05', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-06'),
+(36, (floor(rand()*21)+1), '2022-11-06', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-07'),
+(37, (floor(rand()*21)+1), '2022-11-07', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-08'),
+(38, (floor(rand()*21)+1), '2022-11-08', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-09'),
+(39, (floor(rand()*21)+1), '2022-11-09', (100 + floor(rand()*100)), 'oczekująca', '2022-11-10'),
+(40, (floor(rand()*21)+1), '2022-11-10', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-11'),
+(41, (floor(rand()*21)+1), '2022-11-11', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-12'),
+(42, (floor(rand()*21)+1), '2022-11-12', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-13'),
+(43, (floor(rand()*21)+1), '2022-11-13', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-14'),
+(44, (floor(rand()*21)+1), '2022-11-14', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-15'),
+(45, (floor(rand()*21)+1), '2022-11-15', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-16'),
+(46, (floor(rand()*21)+1), '2022-11-16', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-17'),
+(47, (floor(rand()*21)+1), '2022-11-17', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-18'),
+(48, (floor(rand()*21)+1), '2022-11-18', (100 + floor(rand()*100)), 'oczekująca', '2022-11-19'),
+(49, (floor(rand()*21)+1), '2022-11-19', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-20'),
+(50, (floor(rand()*21)+1), '2022-11-20', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-21'),
+(1, (floor(rand()*21)+1), '2022-11-19', (100 + floor(rand()*100)), 'zatwierdzona', '2022-11-20'),
+(51, (floor(rand()*21)+1), '2022-11-20', (100 + floor(rand()*100)), 'oczekująca', '2022-11-21');
+
+INSERT INTO Klient_Usluga Values
+(5,2, '2022-10-01'),
+(1,5, '2022-10-02'),
+(7,2, '2022-10-02'),
+(2,2, '2022-10-05'),
+(21,7, '2022-10-06'),
+(15,1, '2022-10-08'),
+(12,1,'2022-10-05'),
+(2,1,'2022-10-01'),
+(3,1,'2022-10-02'),
+(4,1,'2022-10-02'),
+(11,1,'2022-10-06'),
+(17,1,'2022-10-01'),
+(18,1,'2022-10-02'),
+(17,2,'2022-10-01'),
+(17,3,'2022-10-01'),
+(12,3,'2022-10-02');
+
+Select Imie, Nazwisko, Data `Data wykupienia usługi`, Nazwa `Nazwa usługi` from klient, Klient_usluga, usługa where usługa.ID_usługi = Klient_Usluga.ID_Usluga and Klient_usluga.ID_Klient = klient.ID_klienta having nazwa ="Śniadanie" and Data = '2022-10-01';
+
+Select Imie, Nazwisko, sum(cena) `Łączna cena za usługi` from klient, Klient_usluga, usługa where usługa.ID_usługi = Klient_Usluga.ID_Usluga and Klient_usluga.ID_Klient = klient.ID_klienta group by imie, nazwisko having `Łączna cena za usługi`>30;
+
+Select Numer, Liczba_miejsc `Liczba miejsc`, Cena, Ilość_łóżek_1osobowych `Ilość łóżek 1 osobowych` from pokój where cena <100;
+
+Select Imie, Nazwisko, Liczba_miejsc `Liczba miejsc`, numer `Numer pokoju`, rezerwacja.cena `Cena za rezerwacje` from pokój, klient, rezerwacja where rezerwacja.ID_klienta = klient.ID_klienta and rezerwacja.ID_pokoju=pokój.ID_pokoju having Liczba_miejsc > 3;
+
+select Cena `Cena za rezerwacje`, Imie, Nazwisko, Status `Status rezerwacji` from (select rezerwacja.cena, imie, nazwisko, Status from rezerwacja, klient where rezerwacja.ID_klienta = klient.ID_klienta having Status = "oczekująca") as s;
